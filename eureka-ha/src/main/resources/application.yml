@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: eurekaServer
+  security:
+    user:
+      name: admin
+      password: root
+server:
+    port: 8080
+    servlet:
+      context-path: /
+
+#自定义属性，3个eureka的地址
+guideself:
+  eureka1:
+    ip: 192.168.80.186
+    port: 8081
+    host: host1 #需要在hosts文件配置域名ip映射
+    ipPort: ${guideself.eureka1.ip}:${guideself.eureka1.port}
+    hostPort: ${guideself.eureka1.host}:${guideself.eureka1.port}
+  eureka2:
+    ip: 192.168.80.57
+    port: 8082
+    host: host2
+    ipPort: ${guideself.eureka2.ip}:${guideself.eureka2.port}
+    hostPort: ${guideself.eureka2.host}:${guideself.eureka2.port}
+  eureka3:
+    ip: 192.168.80.80
+    port: 8083
+    host: host3
+    ipPort: ${guideself.eureka3.ip}:${guideself.eureka3.port}
+    hostPort: ${guideself.eureka3.host}:${guideself.eureka3.port}
+
+
+eureka:
+  server:
+    enable-self-preservation: false #关闭保护机制
+    eviction-interval-timer-in-ms: 3000 #剔除服务的间隔
+  instance:
+    preferIpAddress: false  # eureka注册获取服务可以用ip或者域名的方式。使用ip要部署到不同主机上面;使用域名，要自己配置hosts映射ip
+    hostname: localhost
+    instance-id: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://admin:root@localhost:8080/eureka/
+    fetch-registry: false
+    register-with-eureka: false

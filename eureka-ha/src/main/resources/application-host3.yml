@@ -1,0 +1,15 @@
+server:
+  port: ${guideself.eureka3.port}
+eureka:
+  server:
+    enable-self-preservation: false #关闭保护机制
+    eviction-interval-timer-in-ms: 3000 #剔除服务的间隔
+  instance:
+    preferIpAddress: false  # eureka注册获取服务可以用ip或者域名的方式。使用ip要部署到不同主机上面
+    hostname: ${guideself.eureka3.host}
+    instance-id: ${guideself.eureka3.host}
+  client:
+    serviceUrl:
+      defaultZone: http://admin:root@${guideself.eureka1.hostPort}/eureka/,http://admin:root@${guideself.eureka2.hostPort}/eureka/
+    fetch-registry: true
+    register-with-eureka: true
