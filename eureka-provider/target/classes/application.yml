@@ -2,20 +2,18 @@ spring:
   application:
     name: provider
 server:
-    port: 8081
+    port: ${random.int[10000,19999]}
+    servlet:
+      context-path: /provider
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://admin:root@localhost:8080/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    health-check-url-path: ${server.servlet.context-path}/health
+    status-page-url-path: ${server.servlet.context-path}/info
 
-#启用监控
-management:
-  endpoints:
-    web:
-      exposure:
-        include:
-          - "*"  # 开放所有端点health，info，metrics，通过actuator/+端点名就可以获取相应的信息。默认打开health和info
-  endpoint:
-    health:
-      show-details: always  #未开启actuator/health时，我们获取到的信息是{"status":"UP"}，status的值还有可能是 DOWN。开启后打印详细信息

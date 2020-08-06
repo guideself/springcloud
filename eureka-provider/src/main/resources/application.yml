@@ -2,9 +2,18 @@ spring:
   application:
     name: provider
 server:
-    port: 8081
+    port: ${random.int[10000,19999]}
+    servlet:
+      context-path: /provider
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://admin:root@localhost:8080/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    health-check-url-path: ${server.servlet.context-path}/health
+    status-page-url-path: ${server.servlet.context-path}/info
+

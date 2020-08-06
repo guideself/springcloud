@@ -12,6 +12,6 @@ public class HelloController {
 
     @RequestMapping("/hello")
     public String index() {
-        return "server is "+ env.getProperty("server.port");
+        return "server is "+ env.getProperty("eureka.instance.instance-id");
     }
 }
